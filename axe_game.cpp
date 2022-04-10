@@ -30,7 +30,7 @@ int main()
 
     int direction{10};
 
-    bool collision_with_axe{false};
+    bool collision_with_axe;
     // runs game
     SetTargetFPS(60);
     while (WindowShouldClose() == false)
@@ -44,6 +44,25 @@ int main()
         else
         {
             // Game logic begins
+
+            // update the edges
+            l_circle_x = circle_x - circle_radius;
+            r_circle_x = circle_x + circle_radius;
+            u_circle_y = circle_y - circle_radius;
+            b_circle_y = circle_y + circle_radius;
+
+            l_axe_x = axe_x;
+            r_axe_x = axe_x + axe_length;
+            u_axe_y = axe_y;
+            b_axe_y = axe_y + axe_length;
+
+            // update collision with axe
+            collision_with_axe =
+                (b_axe_y >= u_circle_y) &&
+                (u_axe_y <= b_circle_y) &&
+                (l_axe_x <= r_circle_x) &&
+                (r_axe_x >= l_circle_x);
+
             DrawCircle(circle_x, circle_y, circle_radius, BLUE);
             DrawRectangle(axe_x, axe_y, axe_length, axe_length, RED);
 
